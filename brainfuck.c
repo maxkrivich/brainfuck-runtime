@@ -31,9 +31,19 @@ int main(int argc, char** argv)
 	return EXIT_SUCCESS;
 }
 
+void usage(void)
+{
+	fprintf(stdout, "USAGE:\n\t-i or --ifile <source code file>\n\t-o or --ofile <output file>\n");
+}
+
 
 void parsearg(int argc, char** argv)
 {
+	if(1 == argc)
+	{
+		usage();
+		exit(-1);
+	}
 	int res, ind;
 	const char * short_opt = "hi:o:";
 	const struct option long_opt[] = {
@@ -76,9 +86,17 @@ void parsearg(int argc, char** argv)
 				break;
 			};
 			case '?':
+			{
+				usage();
+				exit(-1);
 				break;
+			};
 			default:
+			{
+				usage();
+				exit(-1);
 				break;
+			};
 		}
 	}
 }
@@ -142,33 +160,33 @@ int execute()
 				break;
 			case '[':
 			{
-				if(!arr[ptr])
-				{
-					++bracket;
-					while(bracket)
+					if(!arr[ptr])
 					{
-						++i;
-						if((i <  nsize) && (cmd[i] == '[')) ++bracket;
-						if((i <  nsize) && (cmd[i] == ']')) --bracket;
+						++bracket;
+						while(bracket)
+						{
+							++i;
+							if((i <  nsize) && (cmd[i] == '[')) ++bracket;
+							if((i <  nsize) && (cmd[i] == ']')) --bracket;
+						}
 					}
-				}
-				break;			
+					break;			
 			}
 			case ']':
 			{	
-				if(arr[ptr])
-				{
-
-                	if(cmd[i] == ']') bracket++;
-                	while(bracket)
-                	{
-                    	--i;
-                    	if(cmd[i] == '[') bracket--;
-                    	if(cmd[i] == ']') bracket++;
-                	}
-                	--i;
-				}
-				break;
+					if(arr[ptr])
+					{
+	
+	                		if(cmd[i] == ']') bracket++;
+	                		while(bracket)
+	                		{
+	                	    	--i;
+	                	    	if(cmd[i] == '[') bracket--;
+	                	    	if(cmd[i] == ']') bracket++;
+	                		}
+	                		--i;
+					}
+					break;
 			}
 			default: 
 				break;

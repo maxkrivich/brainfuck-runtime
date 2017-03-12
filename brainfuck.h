@@ -11,9 +11,10 @@
 	#define ARR_SIZE 30000
 
 	void parsearg(int, char**);
+	void usage(void);
 	int execute(void);
-	void readfile(FILE* f, char*, size_t*);
-	void writefile(FILE* f);
+	void readfile(FILE*, char*, size_t*);
+	void writefile(FILE*);
 	void print(void);
 	char mread(void);
 	int syntaxcheker(const char*);
